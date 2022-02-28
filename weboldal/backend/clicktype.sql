@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2022. Feb 14. 11:27
--- Kiszolgáló verziója: 10.4.22-MariaDB
--- PHP verzió: 8.0.13
+-- Létrehozás ideje: 2022. Feb 28. 14:02
+-- Kiszolgáló verziója: 10.4.6-MariaDB
+-- PHP verzió: 7.3.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -28,8 +29,21 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `forum` (
-  `email` varchar(150) COLLATE utf8_hungarian_ci NOT NULL,
-  `szoveg` varchar(1000) COLLATE utf8_hungarian_ci NOT NULL
+  `id` int(11) NOT NULL,
+  `userid` int(150) NOT NULL,
+  `szoveg` text COLLATE utf8_hungarian_ci NOT NULL,
+  `forumaz` int(150) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `forumok`
+--
+
+CREATE TABLE `forumok` (
+  `id` int(11) NOT NULL,
+  `temak` varchar(150) COLLATE utf8_hungarian_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 -- --------------------------------------------------------
@@ -43,7 +57,8 @@ CREATE TABLE `users` (
   `Email` varchar(150) COLLATE utf8_hungarian_ci NOT NULL,
   `Nev` varchar(100) COLLATE utf8_hungarian_ci NOT NULL,
   `ido` int(100) DEFAULT NULL,
-  `jelszo` text COLLATE utf8_hungarian_ci NOT NULL
+  `jelszo` text COLLATE utf8_hungarian_ci NOT NULL,
+  `jogosultsag` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
@@ -54,18 +69,38 @@ CREATE TABLE `users` (
 -- A tábla indexei `forum`
 --
 ALTER TABLE `forum`
-  ADD UNIQUE KEY `email` (`email`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`userid`),
+  ADD KEY `forumaz` (`forumaz`);
+
+--
+-- A tábla indexei `forumok`
+--
+ALTER TABLE `forumok`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- A tábla indexei `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`Id`),
-  ADD UNIQUE KEY `Email` (`Email`);
+  ADD KEY `Email` (`Email`);
 
 --
 -- A kiírt táblák AUTO_INCREMENT értéke
 --
+
+--
+-- AUTO_INCREMENT a táblához `forum`
+--
+ALTER TABLE `forum`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT a táblához `forumok`
+--
+ALTER TABLE `forumok`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT a táblához `users`
@@ -78,10 +113,16 @@ ALTER TABLE `users`
 --
 
 --
--- Megkötések a táblához `forum`
+-- Megkötések a táblához `forumok`
 --
-ALTER TABLE `forum`
-  ADD CONSTRAINT `forum_ibfk_1` FOREIGN KEY (`email`) REFERENCES `users` (`Email`);
+ALTER TABLE `forumok`
+  ADD CONSTRAINT `forumok_ibfk_1` FOREIGN KEY (`id`) REFERENCES `forum` (`forumaz`);
+
+--
+-- Megkötések a táblához `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`Id`) REFERENCES `forum` (`userid`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
