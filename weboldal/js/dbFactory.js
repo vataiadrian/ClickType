@@ -6,7 +6,7 @@ app.factory('dbFactory', function($http, $q) {
             let data = {
                 table: tablename
             }
-            $http.post('../Backend/getAllRecords.php', data).then(function(response) {
+            $http.post('../backend/API/getAllRecords.php', data).then(function(response) {
                     deferred.resolve(response);
                 },
                 function(err) {
@@ -23,7 +23,7 @@ app.factory('dbFactory', function($http, $q) {
                 table: tablename,
                 condition: condition
             }
-            $http.post('../Backend/getOneRecord.php', data).then(function(response) {
+            $http.post('../backend/API/getOneRecord.php', data).then(function(response) {
                     deferred.resolve(response);
                 },
                 function(err) {
@@ -40,7 +40,7 @@ app.factory('dbFactory', function($http, $q) {
                 table: tablename,
                 values: values
             }
-            $http.post('../Backend/insertRecord.php', data).then(function(response) {
+            $http.post('../backend/API/insertRecord.php', data).then(function(response) {
                     deferred.resolve(response);
                 },
                 function(err) {
@@ -59,7 +59,7 @@ app.factory('dbFactory', function($http, $q) {
                 values: values
             }
             console.log(data);
-            $http.post('../Backend/updateRecord.php', data).then(function(response) {
+            $http.post('../backend/API/updateRecord.php', data).then(function(response) {
                     deferred.resolve(response);
                 },
                 function(err) {
@@ -76,7 +76,7 @@ app.factory('dbFactory', function($http, $q) {
                 table: tablename,
                 id: id
             }
-            $http.post('../Backend/deleteRecord.php', data).then(function(response) {
+            $http.post('../backend/API/deleteRecord.php', data).then(function(response) {
                     deferred.resolve(response);
                 },
                 function(err) {
@@ -92,7 +92,7 @@ app.factory('dbFactory', function($http, $q) {
             let data = {
                 table: tablename
             }
-            $http.post('../Backend/deleteAllRecords.php', data).then(function(response) {
+            $http.post('../backend/API/deleteAllRecords.php', data).then(function(response) {
                     deferred.resolve(response);
                 },
                 function(err) {
