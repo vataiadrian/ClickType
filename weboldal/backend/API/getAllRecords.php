@@ -8,7 +8,11 @@
     $conn->exec("SET NAMES utf8");
     // a frontendről érkezett adatok fogadása
     $data = json_decode(file_get_contents("php://input"));
+    $whatineed='*';
+    $condition='1';
+    $whatineed=$data->whatineed;
+    $condition = $data->condition;
     $table = $data->table;
-    $results = $conn->query("SELECT * FROM $table")->fetchAll();
+    $results = $conn->query("SELECT $whatineed FROM $table WHERE $condition")->fetchAll();
     echo json_encode($results);
 ?>
