@@ -12,9 +12,28 @@ h3{
     color: white;
 }
 
+textarea {
+    resize: none;
+}
+
 .kerekit{
     border-radius: 10px;
 }
+
+
+
+/*scroll-bar*/
+::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb
+{
+	background-color: white;
+}
+
 
 
 /* Statisztika oldal */
@@ -28,19 +47,43 @@ h3{
     color: white;
 }
 
+.navszin:hover{
+    background-color: #cda45e;
+    color: black;
+}
+
+table tbody tr:hover {
+    background-color: #cda45e;
+    color: black;
+}
+
+
 
 /* Belépés oldal */
 .gomb{
-    background-color: #433F40;
-    color: rgb(255, 255, 255);
+    background-color: #cda45e;
+    color: black;
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
 
+.gomb:hover{
+    background-color: #79613a;
+    color: gainsboro;
+}
+
 .regLabel{
     color: white;
 }
+
+.grid{
+    display: grid;
+    grid-template-columns:  500px 1fr;
+    grid-gap: 20px;
+    margin: 0 auto;
+}
+
 
 
 /* GYIK oldal */
@@ -51,7 +94,101 @@ h3{
 }
 
 
+
 /* Letoltes oldal */
 .letolt{
     width: 200px;
+    background-color: #cda45e;
+    color: black;
+}
+
+.letolt:hover{
+    background-color: #79613a;
+    color: gainsboro;
+}
+
+
+
+/* Rolunk oldal */
+.flex{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+}
+
+.flex > div{
+    flex: 1 1 200px;
+    margin: 10px;
+}
+
+
+
+/*Forum oldal*/
+.nagyit{
+    width: 40%;
+}
+
+@media screen and (max-width: 30rem) {
+    .nagyit{
+        width: 60%;
+    }
+}
+
+.temaFel{
+    border-radius: 0;
+    box-shadow: none;
+    font-size: 14px;
+    background: #0c0b09;
+    border-color: #625b4b;
+    color: white;
+}
+
+.temaFel:hover{
+    border-color: #cda45e;
+}
+
+.temaFel:focus {
+    background: #0c0b09;
+    color: white;
+    border-color: #cda45e;
+}
+
+.screen-darken{ 
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0,0,0,.5);
+    pointer-events: none;
+    z-index:10;
+    opacity:1; 
+    visibility: visible;
+    position: fixed;
+}
+
+.navbar{
+    position: relative;
+}
+
+i{
+    color: #cda45e;
+    font-size: 28px;
+}
+
+i:hover{
+    color: #ebaf4e;
+    cursor: pointer;
+}
+
+.forumKuldes{
+    margin-left: 10px;
+    width: 110px;
+    height: 45px;
+    background-color: #cda45e;
+    color: black;
+}
+
+.forumKuldes:hover{
+    background-color: #79613a;
+    color: gainsboro;
 }
