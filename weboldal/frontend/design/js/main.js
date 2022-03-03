@@ -1,18 +1,3 @@
-document.addEventListener("DOMContentLoaded", function(){
-  document.querySelectorAll('.navbar .dropdown').forEach(function(everydropdown){
-    everydropdown.addEventListener('shown.bs.dropdown', function () {
-        el_overlay = document.createElement('span');
-        el_overlay.className = 'screen-darken';
-        document.body.appendChild(el_overlay)
-    });
-
-    everydropdown.addEventListener('hide.bs.dropdown', function () {
-      document.body.removeChild(document.querySelector('.screen-darken'));
-    });
-  });
-}); 
-
-
 var swiper = new Swiper(".mySwiper", {
   autoHeight: true,
   centeredSlides: true,
@@ -162,17 +147,6 @@ var swiper = new Swiper(".mySwiper", {
       scrollto(this.hash)
     }
   }, true)
-
-  /**
-   * Scroll with ofset on page load with hash links in the url
-   */
-  window.addEventListener('load', () => {
-    if (window.location.hash) {
-      if (select(window.location.hash)) {
-        scrollto(window.location.hash)
-      }
-    }
-  });
 
   /**
    * Preloader
