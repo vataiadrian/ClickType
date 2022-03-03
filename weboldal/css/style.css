@@ -22,26 +22,6 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Playfair Display", serif;
 }
 
-.vizszintkozep{
-  display: flex;
-  justify-content: center;
-}
-
-.fuggokozep{
-  display: flex;
-  align-items: center;
-}
-
-.flex{
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 auto;
-}
-
-.flex > div{
-  flex: 1 1 200px;
-  margin: 10px;
-}
 
 
 /*--------------------------------------------------------------
@@ -100,14 +80,6 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Poppins", sans-serif;
 }
 
-#header .logo a {
-  color: #fff;
-}
-
-#header .logo img {
-  max-height: 40px;
-}
-
 
 
 /*--------------------------------------------------------------
@@ -144,7 +116,7 @@ h1, h2, h3, h4, h5, h6 {
 # Menu
 --------------------------------------------------------------*/
 /*
-Számítógép 
+Számítógép nézet
 */
 .navbar {
   padding: 0;
@@ -245,7 +217,7 @@ Számítógép
 }
 
 /*
-Telefon 
+Telefon nézet
 */
 .mobile-nav-toggle {
   color: #fff;
@@ -352,7 +324,7 @@ Telefon
 #fooldal {
   width: 100%;
   height: 100vh;
-  background: url("") top center;
+  background: url("../video/escape2.jpeg") top center;
   background-size: cover;
   position: relative;
   padding: 0;
@@ -391,39 +363,6 @@ Telefon
   color: #cda45e;
 }
 
-#fooldal h2 {
-  color: #eee;
-  margin-bottom: 10px 0 0 0;
-  font-size: 22px;
-}
-
-#fooldal .btns {
-  margin-top: 30px;
-}
-
-#fooldal .btn-menu, #fooldal .btn-book {
-  font-weight: 600;
-  font-size: 13px;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  display: inline-block;
-  padding: 12px 30px;
-  border-radius: 50px;
-  transition: 0.3s;
-  line-height: 1;
-  color: white;
-  border: 2px solid #cda45e;
-}
-
-#fooldal .btn-menu:hover, #fooldal .btn-book:hover {
-  background: #cda45e;
-  color: #fff;
-}
-
-#fooldal .btn-book {
-  margin-left: 15px;
-}
-
 @media (min-width: 1024px) {
   #fooldal {
     background-attachment: fixed;
@@ -454,153 +393,39 @@ Telefon
 
 
 /*--------------------------------------------------------------
-# Rólunk
+# Tartalom
 --------------------------------------------------------------*/
-.breadcrumbs {
-  padding: 15px 0;
-  background: #1d1b16;
-  margin-top: 110px;
-}
-
-@media (max-width: 992px) {
-  .breadcrumbs {
-    margin-top: 98px;
-  }
-}
-
-.breadcrumbs h2 {
-  font-size: 26px;
-  font-weight: 300;
-}
-
-.breadcrumbs ol {
-  display: flex;
-  flex-wrap: wrap;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  font-size: 14px;
-}
-
-.breadcrumbs ol li + li {
-  padding-left: 10px;
-}
-
-.breadcrumbs ol li + li::before {
-  display: inline-block;
-  padding-right: 10px;
-  color: #37332a;
-  content: "/";
-}
-
-@media (max-width: 768px) {
-  .breadcrumbs .d-flex {
-    display: block !important;
-  }
-  .breadcrumbs ol {
-    display: block;
-  }
-  .breadcrumbs ol li {
-    display: inline-block;
-  }
-}
-
-.rolunk {
+.tartalom {
   background-size: cover;
   position: relative;
   padding: 80px 0;
 }
 
-.rolunk:before {
-  content: "";
-  background: rgba(0, 0, 0, 0.8);
-  position: absolute;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  right: 0;
-}
-
-.rolunk .rolunk-img {
-  position: relative;
-  transition: 0.5s;
-}
-
-.rolunk .rolunk-img img {
-  max-width: 100%;
-  border: 4px solid rgba(255, 255, 255, 0.2);
-  position: relative;
-}
-
-.rolunk .rolunk-img::before {
-  position: absolute;
-  left: 20px;
-  top: 20px;
-  width: 60px;
-  height: 60px;
-  z-index: 1;
-  content: "";
-  border-left: 5px solid #cda45e;
-  border-top: 5px solid #cda45e;
-  transition: 0.5s;
-}
-
-.rolunk .rolunk-img::after {
-  position: absolute;
-  right: 20px;
-  bottom: 20px;
-  width: 60px;
-  height: 60px;
-  z-index: 2;
-  content: "";
-  border-right: 5px solid #cda45e;
-  border-bottom: 5px solid #cda45e;
-  transition: 0.5s;
-}
-
-.rolunk .rolunk-img:hover {
-  transform: scale(1.03);
-}
-
-.rolunk .rolunk-img:hover::before {
-  left: 10px;
-  top: 10px;
-}
-
-.rolunk .rolunk-img:hover::after {
-  right: 10px;
-  bottom: 10px;
-}
-
-.rolunk .content h3 {
-  font-weight: 600;
-  font-size: 26px;
-}
-
-.rolunk .content ul {
-  list-style: none;
-  padding: 0;
-}
-
-.rolunk .content ul li {
-  padding-bottom: 10px;
-}
-
-.rolunk .content ul i {
-  font-size: 20px;
-  padding-right: 4px;
-  color: #cda45e;
-}
-
-.rolunk .content p:last-child {
-  margin-bottom: 0;
-}
-
 @media (min-width: 1024px) {
-  .rolunk {
+  .tartalom {
     background-attachment: fixed;
   }
 }
+
+/* Ismertető, hírek oldal*/
+.flex{
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+}
+
+.flex > div{
+  flex: 1 1 200px;
+  margin: 10px;
+}
+
+/* Letöltés oldal */
+/* Statisztika oldal */
+/* Hírek oldal */
+/* Rólunk oldal */
+/* GYIK oldal */
+/* Fórum oldal */
+/* Belépés oldal */
 
 
 
@@ -710,50 +535,7 @@ Telefon
   color: #cda45e;
 }
 
-#footer .footer-top .footer-newsletter form {
-  margin-top: 30px;
-  background: #28251f;
-  padding: 6px 10px;
-  position: relative;
-  border-radius: 50px;
-  border: 1px solid #454035;
-}
-
-#footer .footer-top .footer-newsletter form input[type=email] {
-  border: 0;
-  padding: 4px;
-  width: calc(100% - 110px);
-  background: #28251f;
-  color: white;
-}
-
-#footer .footer-top .footer-newsletter form input[type=submit] {
-  position: absolute;
-  top: -1px;
-  right: -1px;
-  bottom: -1px;
-  border: 0;
-  background: none;
-  font-size: 16px;
-  padding: 0 20px 2px 20px;
-  background: #cda45e;
-  color: #fff;
-  transition: 0.3s;
-  border-radius: 50px;
-}
-
-#footer .footer-top .footer-newsletter form input[type=submit]:hover {
-  background: #d3af71;
-}
-
 #footer .copyright {
   text-align: center;
   padding-top: 30px;
-}
-
-#footer .credits {
-  padding-top: 10px;
-  text-align: center;
-  font-size: 13px;
-  color: #fff;
 }
