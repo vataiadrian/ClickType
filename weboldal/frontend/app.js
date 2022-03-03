@@ -1,6 +1,7 @@
-var app= angular.module('ClickApp',[]);
+var app= angular.module('ClickApp',["ngRoute"]);
 
 app.run(function($rootScope, $http){
+    $rootScope.title = "ClickApp";
     if (sessionStorage.getItem['uID']) {
         $rootScope.loggedIn=1;
         $rootScope.userName=sessionStorage.getItem('uName');
@@ -14,7 +15,7 @@ app.controller('reglogCtrl', function($scope, $rootScope, $http){
     $scope.regist = function() {
         $scope.users = [];
         console.log("anyadat");
-        if ($scope.user.name == null || $scope.user.email == null || $scope.passwd1 == null || $scope.passwd2 == null) {
+        if ($scope.user.name == null || $scope.user.emailreg == null || $scope.passwd1 == null || $scope.passwd2 == null) {
             alert("Nem adtál meg minden adatot!");
         } else {
             if ($scope.passwd1 != $scope.passwd2) {
@@ -29,7 +30,7 @@ app.controller('reglogCtrl', function($scope, $rootScope, $http){
                             url: "../backend/API/getOneRecord.php",
                             data: {
                                 'table': 'users',
-                                'felt': 'email="' + $scope.user.email + '"'
+                                'felt': 'email="' + $scope.user.emailreg + '"'
                             }
                         })
                         .then(function(response) {
@@ -44,7 +45,7 @@ app.controller('reglogCtrl', function($scope, $rootScope, $http){
                                         data: {
                                             "table": "users",
                                             "values": {
-                                                "Email": "'" + $scope.user.email + "'",
+                                                "Email": "'" + $scope.user.emailreg + "'",
                                                 "Nev": "'" + $scope.user.name + "'",
                                                 "ido": "'0'",
                                                 "jelszo": "'" + CryptoJS.SHA1($scope.passwd1) + "'",
@@ -68,10 +69,10 @@ app.controller('reglogCtrl', function($scope, $rootScope, $http){
     }
 
     $rootScope.loggedIn=0;
-        $scope.user = {email: "", passwd: ""};
+        $scope.user = {emaillog: "", passwd: ""};
              $scope.login=function(){
                 //console.log($scope);
-                if ($scope.user.email == "" || $scope.user.passwd == "") {
+                if ($scope.user.emaillog == "" || $scope.user.passwd == "") {
                     alert('Nem adtad meg a belépési adatokat!');
                 }
                 else
@@ -81,7 +82,7 @@ app.controller('reglogCtrl', function($scope, $rootScope, $http){
                         url: "../backend/API/getOneRecord.php",
                         data: {
                             'table': 'users',
-                            'felt': 'Email="' + $scope.user.email + '" AND jelszo="' + CryptoJS.SHA1($scope.user.passwd) + '"'
+                            'felt': 'Email="' + $scope.user.emaillog + '" AND jelszo="' + CryptoJS.SHA1($scope.user.passwd) + '"'
                         }
                     })
                     .then(function (response) {
@@ -103,3 +104,39 @@ app.controller('reglogCtrl', function($scope, $rootScope, $http){
                 }
             }
         });
+
+app.config(function($routeProvider) {
+$routeProvider
+    .when('/', {
+        templateUrl: 'fooldal.html',
+        controller: 'homeCtrl',
+    })
+    .when('/reglog', {
+        templateUrl: 'belepes.html',
+        controller: 'reglogCtrl',
+    })
+    .when('/forum', {
+        templateUrl: 'forum.html',
+        controller: 'forumCtrl',
+    })
+    .when('/gyik', {
+        templateUrl: 'GYIK.html',
+        controller: 'gyikCtrl',
+    })
+    .when('/news', {
+        templateUrl: 'hirek.html',
+        controller: 'newsCtrl',
+    })
+    .when('/aboutus', {
+        templateUrl: 'rolunk.html',
+        controller: 'aboutusCtrl',
+    })
+    .when('/stats', {
+        templateUrl: 'statisztika.html',
+        controller: 'statsCtrl',
+    })
+    .when('/download', {
+        templateUrl: 'letoltes.html',
+        controller: 'downloadCtrl',
+    })
+});
