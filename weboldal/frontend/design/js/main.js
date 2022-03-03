@@ -148,6 +148,8 @@ var swiper = new Swiper(".mySwiper", {
     }
   }, true)
 
+  
+
   /**
    * Preloader
    */
