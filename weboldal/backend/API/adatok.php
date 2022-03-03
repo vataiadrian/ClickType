@@ -1,6 +1,6 @@
 <?php
     $dbhost = 'localhost';
-    $dbname = '214szft_login';
+    $dbname = 'clicktype';
     $dbuser = 'root';
     $dbpass = '';
 ?>
