@@ -1,7 +1,7 @@
 var app= angular.module('ClickApp',["ngRoute"]);
 
 app.run(function($rootScope, $http){
-    $rootScope.title = "ClickApp";
+    $rootScope.title = "ClickType";
     if (sessionStorage.getItem['uID']) {
         $rootScope.loggedIn=1;
         $rootScope.userName=sessionStorage.getItem('uName');
@@ -109,7 +109,6 @@ app.config(function($routeProvider) {
 $routeProvider
     .when('/', {
         templateUrl: 'fooldal.html',
-        controller: 'homeCtrl',
     })
     .when('/reglog', {
         templateUrl: 'belepes.html',
@@ -117,26 +116,20 @@ $routeProvider
     })
     .when('/forum', {
         templateUrl: 'forum.html',
-        controller: 'forumCtrl',
     })
     .when('/gyik', {
         templateUrl: 'GYIK.html',
-        controller: 'gyikCtrl',
     })
     .when('/news', {
         templateUrl: 'hirek.html',
-        controller: 'newsCtrl',
     })
     .when('/aboutus', {
         templateUrl: 'rolunk.html',
-        controller: 'aboutusCtrl',
     })
     .when('/stats', {
         templateUrl: 'statisztika.html',
-        controller: 'statsCtrl',
     })
     .when('/download', {
         templateUrl: 'letoltes.html',
-        controller: 'downloadCtrl',
     })
 });
