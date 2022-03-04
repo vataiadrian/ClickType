@@ -113,6 +113,7 @@ $routeProvider
     .when('/reglog', {
         templateUrl: 'belepes.html',
         controller: 'reglogCtrl',
+        ID:'belep',
     })
     .when('/forum', {
         templateUrl: 'forum.html',
