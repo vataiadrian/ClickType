@@ -29,35 +29,56 @@
               </div>
             </div>
           </div>
-          <div class="bg-dark kerekit mt-3">
-            <div class="p-3">
-              <h3 class="text-center mb-3 ">Regisztráció</h3>
-              <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="floatingInput" ng-model="user.name" placeholder="Játékosnév">
-                <label  for="floatingInput">Játékosnév</label>
-              </div>
-              <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="floatingIn" ng-model="user.emailreg" placeholder="name@example.com">
-                <label  for="floatingIn">E-mail</label>
-              </div>
-              <div class="form-floating mb-3">
-                <input type="password" class="form-control" id="floatingPasswd1" ng-model="passwd1" placeholder="Jelszó">
-                <label  for="floatingPasswd1">Jelszó</label>
-              </div>
-              <div class="form-floating mb-3">
-                <input type="password" class="form-control" id="floatingPasswd2" ng-model="passwd2" placeholder="Jelszó">
-                <label  for="floatingPasswd2">Jelszó megerősítése</label>
-              </div>  
-              <div class="mt-3">
-                <input type="checkbox" name="checkbox" id="checkbox_id" value="value">
-                <label class="regLabel me-5" for="checkbox_id">Elfogadom a felhasználói feltételeket</label>
-                <input type="checkbox" name="checkbox" id="checkbox2_id" value="value"> 
-                <label class="regLabel" for="checkbox2_id">Feliratkozom a hírlevélre</label>
-              </div>
-              <div class="mt-4">
-                <button class="btn gomb" ng-click="regist()">Regisztráció</button>
-              </div>
-            </div>
+
+          <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="floatingPassword" ng-model="user.passwd" placeholder="Jelszó">
+            <label  for="floatingPassword">Jelszó</label>
+          </div>
+          
+          <div class="mt-4">
+            <button class="btn gomb" ng-click="login()">Bejelentkezés</button>
           </div>
         </div>
-    </section>
+      </div>
+
+      <div class="bg-dark kerekit mt-3">
+        <div class="p-3">
+
+          <h3 class="text-center mb-3 ">Regisztráció</h3>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="floatingInput" ng-model="user.name" placeholder="Játékosnév">
+            <label  for="floatingInput">Játékosnév</label>
+          </div>
+
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="floatingIn" ng-model="user.emailreg" placeholder="name@example.com">
+            <label  for="floatingIn">E-mail</label>
+          </div>
+
+          <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="floatingPasswd1" ng-model="passwd1" placeholder="Jelszó">
+            <label  for="floatingPasswd1">Jelszó</label>
+          </div>
+
+          <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="floatingPasswd2" ng-model="passwd2" placeholder="Jelszó">
+            <label  for="floatingPasswd2">Jelszó megerősítése</label>
+          </div>  
+
+          <div class="mt-3">
+            <input type="checkbox" name="checkbox" id="checkbox_id" value="value">
+            <label class="regLabel me-5" for="checkbox_id">Elfogadom a felhasználói feltételeket</label>
+            <input type="checkbox" name="checkbox" id="checkbox2_id" value="value"> 
+            <label class="regLabel" for="checkbox2_id">Feliratkozom a hírlevélre</label>
+          </div>
+
+          <div class="mt-4">
+            <button class="btn gomb" ng-click="regist()">Regisztráció</button>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
