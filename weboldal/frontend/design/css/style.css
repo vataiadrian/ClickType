@@ -17,6 +17,8 @@
   --kereses: red;
   --tablahover: #37332a;
   --rolunk: red;
+  --bej: black;
+  --bejhover: rgb(150, 3, 3);
 
 
   /*footer*/
@@ -795,8 +797,110 @@ tbody tr:hover{
 .uzenetgomb button:focus{
   box-shadow: none;
 }
+/***//***//*/*/
 /* Belépés oldal */
+.bej{
+  background-color: rgb(207, 0, 0);
+  border-radius: 5px;
+}
 
+.bej label{
+  color: var(--betuszin);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.bej button{
+  border: 2px solid black;
+  color: var(--betuszin);
+  padding: 8px 25px;
+  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  transition: 0.3s;
+}
+
+.bej button:hover{
+  background: var(--letoltobtnhover);
+  color: var(--betuszin);
+}
+
+.bej button:focus{
+  box-shadow: none;
+}
+
+.bej input{
+  padding: 12px 24px;
+  background-color: transparent;
+  border: 2px solid transparent;
+  border-bottom: 1px solid black;
+}
+
+.bej input:hover {
+  padding: 12px 24px;
+  background-color: var(--bejhover);
+  border-radius: 5px;
+}
+
+.bej input:focus {
+  padding: 12px 24px;
+  border-radius: 5px;
+  color: var(--betuszin);
+  box-shadow: none;
+  background-color: var(--bejhover);
+  border: 2px solid transparent;
+  border-bottom: 1px solid black;
+}
+
+.reg label{
+  color: var(--betuszin);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.reg button{
+  border: 2px solid var(--alapszin);
+  color: var(--betuszin);
+  padding: 8px 25px;
+  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  transition: 0.3s;
+}
+
+.reg button:hover{
+  background: var(--letoltobtnhover);
+  color: var(--betuszin);
+}
+
+.reg button:focus{
+  box-shadow: none;
+}
+
+.reg input{
+  padding: 12px 24px;
+  background-color: transparent;
+  border: 2px solid transparent;
+  border-bottom: 1px solid var(--kereses);
+}
+
+.reg input:hover {
+  padding: 12px 24px;
+  background-color: var(--tablahover);
+  border-radius: 5px;
+}
+
+.reg input:focus {
+  padding: 12px 24px;
+  border-radius: 5px;
+  color: var(--betuszin);
+  box-shadow: none;
+  background-color: var(--tablahover);
+  border: 2px solid transparent;
+  border-bottom: 1px solid var(--kereses);
+}
 
 
 /*--------------------------------------------------------------
