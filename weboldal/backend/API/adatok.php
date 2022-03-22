@@ -1,6 +1,6 @@
 <?php
     $dbhost = 'localhost';
-    $dbname = 'Clicktype';
+    $dbname = 'clicktype';
     $dbuser = 'root';
     $dbpass = '';
 ?>

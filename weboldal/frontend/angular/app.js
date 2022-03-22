@@ -11,7 +11,7 @@ app.run(function($rootScope, $http){
     }
 });
 
-app.controller('reglogCtrl', function($scope, $rootScope, $http){
+app.controller('reglogCtrl', function($scope, $rootScope, $http, $location){
     $scope.regist = function() {
         $scope.users = [];
         console.log("anyadat");
@@ -97,7 +97,7 @@ app.controller('reglogCtrl', function($scope, $rootScope, $http){
                             sessionStorage.setItem('uLoggedIn',angular.toJson($rootScope.loggedIn));
                             sessionStorage.setItem('uJog',angular.toJson($scope.users.jogosultsag));
                             console.log("anyadat")
-                            //$location.path('#!/');
+                            $location.path('#!/');
 
                         }    
                     })
@@ -129,8 +129,25 @@ $routeProvider
     })
     .when('/stats', {
         templateUrl: 'statisztika.html',
+        controller: 'statCtrl'
     })
     .when('/download', {
         templateUrl: 'letoltes.html',
     })
 });
+
+app.controller('statCtrl', function($scope, $http){
+    $scope.user = [];
+    $http({
+        method: "POST",
+        url: "../backend/API/getAllRecords.php",
+        data: {
+            'whatineed': '',
+            'table': 'users',
+            'condition': ''
+        }
+    })
+    .then(function (res) {
+        $scope.user = res.data;
+    })
+})

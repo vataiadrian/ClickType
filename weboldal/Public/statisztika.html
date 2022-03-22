@@ -16,7 +16,7 @@
     <input class="kereses" type="search" placeholder="Keresés" data-aos="fade-up" data-aos-delay="100">
 
     <div data-aos="fade-up" data-aos-delay="300">
-      <table class="table tablazat">
+      <table class="table tablazat" ng-controller="statCtrl">
       
         <thead>
           <tr>
@@ -27,45 +27,10 @@
         </thead>
   
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>124312</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>4568456</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Jani</td>
-            <td>4568456</td>
-          </tr>
-          <tr>
-            <th scope="row">4</th>
-            <td>Sanyi</td>
-            <td>4568456</td>
-          </tr>
-          <tr>
-            <th scope="row">5</th>
-            <td>Béla</td>
-            <td>4568456</td>
-          </tr>
-          <tr>
-            <th scope="row">6</th>
-            <td>Géza</td>
-            <td>4568456</td>
-          </tr>
-          <tr>
-            <th scope="row">7</th>
-            <td>Nyiklós</td>
-            <td>4568456</td>
-          </tr>
-          <tr>
-            <th scope="row">8</th>
-            <td>Zsóti</td>
-            <td>4568456</td>
+          <tr ng-repeat="users in user | orderBy:'-ido' | limitTo: 10">
+            <th scope="row">{{$index + 1}}</th>
+            <td>{{users.Nev}}</td>
+            <td>{{users.ido}}</td>
           </tr>
         </tbody>
   
@@ -81,9 +46,9 @@
               </a>
             </li>
   
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="">1</a></li>
+            <li class="page-item"><a class="page-link" href="">2</a></li>
+            <li class="page-item"><a class="page-link" href="">3</a></li>
   
             <li class="page-item">
               <a class="page-link" href="#" aria-label="Next">
