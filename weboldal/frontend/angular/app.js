@@ -125,22 +125,50 @@ $routeProvider
         ID:'belep',
     })
     .when('/forum', {
+        resolve: {
+            function($location, $rootScope) {
+                if (!$rootScope.loggedIn) {
+                    $location.path('/');
+                }
+            }
+        },
         templateUrl: 'forum.html',
     })
     .when('/gyik', {
         templateUrl: 'GYIK.html',
     })
     .when('/news', {
+        resolve: {
+            function($location, $rootScope) {
+                if (!$rootScope.loggedIn) {
+                    $location.path('/');
+                }
+            }
+        },
         templateUrl: 'hirek.html',
     })
     .when('/aboutus', {
         templateUrl: 'rolunk.html',
     })
     .when('/stats', {
+        resolve: {
+            function($location, $rootScope) {
+                if (!$rootScope.loggedIn) {
+                    $location.path('/');
+                }
+            }
+        },
         templateUrl: 'statisztika.html',
         controller: 'statCtrl'
     })
     .when('/download', {
+        resolve: {
+            function($location, $rootScope) {
+                if (!$rootScope.loggedIn) {
+                    $location.path('/');
+                }
+            }
+        },
         templateUrl: 'letoltes.html',
     })
 });

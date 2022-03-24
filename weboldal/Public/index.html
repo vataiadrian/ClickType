@@ -33,15 +33,15 @@
         <ul class="navbar-nav me-auto">
 
           <li class="nav-item">
-            <a class="nav-link scrollto active" href="#!/download">Letöltés</a>
+            <a class="nav-link scrollto active" href="#!/download" ng-if="loggedIn == true">Letöltés</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link scrollto" href="#!/stats">Statisztika</a>
+            <a class="nav-link scrollto" href="#!/stats" ng-if="loggedIn == true">Statisztika</a>
           </li>
           
           <li class="nav-item">
-            <a class="nav-link scrollto" href="#!/news">Hírek</a>
+            <a class="nav-link scrollto" href="#!/news" ng-if="loggedIn == true">Hírek</a>
           </li>
 
           <li class="nav-item">
@@ -53,7 +53,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link scrollto" href="#!/forum">Fórum</a>
+            <a class="nav-link scrollto" href="#!/forum" ng-if="loggedIn == true">Fórum</a>
           </li>
 
         </ul>
