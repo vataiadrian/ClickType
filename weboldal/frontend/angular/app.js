@@ -3,11 +3,11 @@ var app= angular.module('ClickApp',["ngRoute"]);
 app.run(function($rootScope, $http){
     $rootScope.title = "ClickType";
     if (sessionStorage.getItem['uID']) {
-        $rootScope.loggedIn=1;
+        $rootScope.loggedIn=true;
         $rootScope.userName=sessionStorage.getItem('uName');
     }
     else{
-        $rootScope.loggedIn=0;
+        $rootScope.loggedIn=false;
     }
 });
 
@@ -68,7 +68,7 @@ app.controller('reglogCtrl', function($scope, $rootScope, $http, $location){
         }
     }
 
-    $rootScope.loggedIn=0;
+    $rootScope.loggedIn= false;
         $scope.user = {emaillog: "", passwd: ""};
              $scope.login=function(){
                 //console.log($scope);
@@ -90,7 +90,8 @@ app.controller('reglogCtrl', function($scope, $rootScope, $http, $location){
                         if ($scope.users.length==0) {
                             alert("Hibás belépési adatok!");
                         } else {
-                            $rootScope.loggedIn=1;
+                            $rootScope.loggedIn=true;
+                            $rootScope.loggedUser = $scope.user.Nev;
                             sessionStorage.setItem('uID',angular.toJson($scope.users.ID));
                             sessionStorage.setItem('uName',angular.toJson($scope.users.Nev));
                             sessionStorage.setItem('uMail',angular.toJson($scope.users.Email));
@@ -102,6 +103,14 @@ app.controller('reglogCtrl', function($scope, $rootScope, $http, $location){
                         }    
                     })
                 }
+            }
+
+            $scope.logout = function() {
+                console.log('apukad')
+                sessionStorage.removeItem('uName');
+                $rootScope.loggedUser = "";
+                $rootScope.loggedIn = false;
+                $location.path('#!/');
             }
         });
 

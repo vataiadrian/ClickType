@@ -62,7 +62,10 @@
         
       </nav>
 
-      <a href="#!/reglog" class="book-a-table-btn scrollto d-none d-lg-flex">Bejelentkezés</a>
+      <div ng-controller="reglogCtrl">
+        <a href="#!/reglog" class="book-a-table-btn scrollto d-none d-lg-flex" ng-if="loggedIn == false">Bejelentkezés</a>
+      <a href="" class="book-a-table-btn scrollto d-none d-lg-flex" ng-click="logout()" ng-if="loggedIn == true">Kijelentkezés</a>
+      </div>
 
     </div>
   </header>
