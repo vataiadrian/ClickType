@@ -2,12 +2,16 @@ var app= angular.module('ClickApp',["ngRoute"]);
 
 app.run(function($rootScope, $http){
     $rootScope.title = "ClickType";
-    if (sessionStorage.getItem['uID']) {
+    if (sessionStorage.getItem('uID')) {
         $rootScope.loggedIn=true;
-        $rootScope.userName=sessionStorage.getItem('uName');
+        $rootScope.userName=angular.fromJson(sessionStorage.getItem('uName'));
+        $rootScope.jogosultsag=angular.fromJson(sessionStorage.getItem('uJog'));
+        console.log(sessionStorage.getItem('uID'));
     }
     else{
         $rootScope.loggedIn=false;
+        $rootScope.userName="";
+        $rootScope.jogosultsag="";
     }
 });
 
@@ -91,13 +95,14 @@ app.controller('reglogCtrl', function($scope, $rootScope, $http, $location){
                             alert("Hibás belépési adatok!");
                         } else {
                             $rootScope.loggedIn=true;
-                            $rootScope.loggedUser = $scope.user.Nev;
-                            sessionStorage.setItem('uID',angular.toJson($scope.users.ID));
-                            sessionStorage.setItem('uName',angular.toJson($scope.users.Nev));
-                            sessionStorage.setItem('uMail',angular.toJson($scope.users.Email));
+                            $rootScope.loggedUser = $scope.users[0].Nev;
+                            sessionStorage.setItem('uID',angular.toJson($scope.users[0].ID));
+                            sessionStorage.setItem('uName',angular.toJson($scope.users[0].Nev));
+                            sessionStorage.setItem('uMail',angular.toJson($scope.users[0].Email));
                             sessionStorage.setItem('uLoggedIn',angular.toJson($rootScope.loggedIn));
-                            sessionStorage.setItem('uJog',angular.toJson($scope.users.jogosultsag));
-                            console.log("anyadat")
+                            sessionStorage.setItem('uJog',angular.toJson($scope.users[0].jogosultsag));
+                            console.log($rootScope.jogosultsag);
+                            console.log(sessionStorage.getItem('uID'));
                             $location.path('#!/');
 
                         }    
@@ -106,8 +111,10 @@ app.controller('reglogCtrl', function($scope, $rootScope, $http, $location){
             }
 
             $scope.logout = function() {
-                console.log('apukad')
                 sessionStorage.removeItem('uName');
+                sessionStorage.removeItem('uJog');
+                sessionStorage.removeItem('uLoggedIn');
+                sessionStorage.removeItem('uMail');
                 $rootScope.loggedUser = "";
                 $rootScope.loggedIn = false;
                 $location.path('#!/');
@@ -171,6 +178,27 @@ $routeProvider
         },
         templateUrl: 'letoltes.html',
     })
+    .when('/profilemod', {
+        resolve: {
+            function($location, $rootScope) {
+                if(!$rootScope.loggedIn) {
+                    $location.path('/');
+                }
+            }
+        },
+        templateUrl: 'profilemod.html',
+    })
+    .when('/felhadmin', {
+        resolve: {
+            function($location, $rootScope) {
+                if($rootScope.jogosultsag == 1) {
+                    $location.path('/');
+                }
+            }
+        },
+        templateUrl: 'felhasznalok.html',
+        controller: 'felhadminCtrl'
+    })
 });
 
 app.controller('statCtrl', function($scope, $http){
@@ -187,4 +215,19 @@ app.controller('statCtrl', function($scope, $http){
     .then(function (res) {
         $scope.user = res.data;
     })
-})
+});
+app.controller('felhadminCtrl', function($scope,$http){
+    $scope.user = [];
+    $http({
+        method: "POST",
+        url: "../backend/API/getAllRecords.php",
+        data: {
+            'whatineed': '',
+            'table': 'users',
+            'condition': ''
+        }
+    })
+    .then(function(res){
+        $scope.user = res.data;
+    })
+});
