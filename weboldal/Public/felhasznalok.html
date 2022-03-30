@@ -22,6 +22,7 @@
         <tr>
             <th scope="col">Játékos név</th>
             <th scope="col">E-mail</th>
+            <th scope="col">Módosítások</th>
         </tr>
         </thead>
 
@@ -29,6 +30,8 @@
         <tr ng-repeat="users in user">
             <td>{{users.Nev}}</td>
             <td>{{users.Email}}</td>
+            <td><a href="#!/profilemod">Mod</a></td>
+            <td><a href="">Delete</a></td>
         </tr>
         </tbody>
 

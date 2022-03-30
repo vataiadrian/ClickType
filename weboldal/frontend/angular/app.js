@@ -1,17 +1,18 @@
 var app= angular.module('ClickApp',["ngRoute"]);
 
-app.run(function($rootScope, $http){
+app.run(function($rootScope, $http, $location){
     $rootScope.title = "ClickType";
-    if (sessionStorage.getItem('uID')) {
+    if (sessionStorage.getItem('uLoggedIn')) {
         $rootScope.loggedIn=true;
         $rootScope.userName=angular.fromJson(sessionStorage.getItem('uName'));
         $rootScope.jogosultsag=angular.fromJson(sessionStorage.getItem('uJog'));
-        console.log(sessionStorage.getItem('uID'));
+        $rootScope.email = angular.fromJson(sessionStorage.getItem('uMail'));
+        $location.path('#!/')
     }
     else{
         $rootScope.loggedIn=false;
         $rootScope.userName="";
-        $rootScope.jogosultsag="";
+        $rootScope.jog="";
     }
 });
 
@@ -63,7 +64,7 @@ app.controller('reglogCtrl', function($scope, $rootScope, $http, $location){
                                         $scope.email = "";
                                         $scope.pass1 = "";
                                         $scope.pass2 = "";
-                                        //   $location.path('#!/');
+                                        $location.path('#!/');
                                     });
                             }
                         });
@@ -96,13 +97,12 @@ app.controller('reglogCtrl', function($scope, $rootScope, $http, $location){
                         } else {
                             $rootScope.loggedIn=true;
                             $rootScope.loggedUser = $scope.users[0].Nev;
+                            $rootScope.jogosultsag = $scope.users[0].jogosultsag;
                             sessionStorage.setItem('uID',angular.toJson($scope.users[0].ID));
                             sessionStorage.setItem('uName',angular.toJson($scope.users[0].Nev));
                             sessionStorage.setItem('uMail',angular.toJson($scope.users[0].Email));
                             sessionStorage.setItem('uLoggedIn',angular.toJson($rootScope.loggedIn));
-                            sessionStorage.setItem('uJog',angular.toJson($scope.users[0].jogosultsag));
-                            console.log($rootScope.jogosultsag);
-                            console.log(sessionStorage.getItem('uID'));
+                            sessionStorage.setItem('uJog',angular.toJson($rootScope.jogosultsag));
                             $location.path('#!/');
 
                         }    
@@ -199,6 +199,10 @@ $routeProvider
         templateUrl: 'felhasznalok.html',
         controller: 'felhadminCtrl'
     })
+    .when('/profilemod', {
+
+        templateUrl: 'profilemod.html',
+    })
 });
 
 app.controller('statCtrl', function($scope, $http){
@@ -231,3 +235,61 @@ app.controller('felhadminCtrl', function($scope,$http){
         $scope.user = res.data;
     })
 });
+
+app.controller('profilemodCtrl', function($scope, $rootScope, $http, $location){
+    $scope.ujemail = $rootScope.email;
+    $scope.ujnev = $rootScope.userName;
+    $http({
+        method: "POST",
+        url: "../backend/API/getOneRecord.php",
+        data: {
+            'table': 'users',
+            'felt': 'Email="' + $rootScope.email + '"'
+        }
+    })
+    .then(function(response) {
+        $scope.Nev = response.data.Nev;
+        $scope.Email = response.data.Email;
+    });
+
+    $scope.profilmod = function() {
+        if ($scope.ujnev == null || $scope.ujemail == null) {
+            alert("Nem adtál meg minden adatot!");
+        } else {
+            $http({
+                    method: "POST",
+                    url: "../backend/API/getOneRecord.php",
+                    data: {
+                        'table': 'users',
+                        'felt': 'Email="' + $scope.Email
+                    }
+                })
+                .then(function(res) {
+                    if (res.data != "") {
+                        alert("Ez az e-mail cím már foglalt!");
+                    } else {
+                        $http
+                        ({
+                            method: "POST",
+                            url: "../backend/API/updateRecord.php",
+                            data: {
+                                'table': 'users',
+                                'values': {
+                                    'name': "'" + $scope.Nev + "'",
+                                    'email': "'" + $scope.Email + "'"
+                                }
+                            }
+                        })
+
+                        .then(function(response) {
+                            alert(response.data.message);
+                            sessionStorage.setItem('uName', $scope.Nev);
+                            sessionStorage.setItem('uMail', $scope.Email);
+                            $rootScope.userName = $scope.Nev;
+                            $rootScope.email = $scope.Email;
+                        })
+                    }
+                })
+            }
+        }
+    });

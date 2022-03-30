@@ -57,7 +57,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link scrollto" href="#!/felhadmin" ng-if="loggedIn==true">Felhasználók</a>
+            <a class="nav-link scrollto" href="#!/felhadmin" ng-if="loggedIn==true && jogosultsag==2">Felhasználók</a>
           </li>
 
         </ul>
@@ -67,6 +67,7 @@
       </nav>
 
       <div ng-controller="reglogCtrl">
+        <a href="#!/profilemod" class="book-a-table-btn scrollto d-none d-lg-flex" ng-if="loggedIn==true">{{userName}}</a>
         <a href="#!/reglog" class="book-a-table-btn scrollto d-none d-lg-flex" ng-if="loggedIn == false">Bejelentkezés</a>
       <a href="" class="book-a-table-btn scrollto d-none d-lg-flex" ng-click="logout()" ng-if="loggedIn == true">Kijelentkezés</a>
       </div>

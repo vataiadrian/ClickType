@@ -10,17 +10,19 @@
     </div>
 </section>
 
-<section class="tartalom">
+<section class="tartalom" ng-controller="profilemodCtrl">
     <div class="container" data-aos="fade-up">
         <div class="profmod">
             <h2>Játékosnév:</h2>
-            <input type="text" name="nev" id="" class="ms-3 mt-2 mb-3">
+            <input type="text" ng-model="ujnev" placeholder={{userName}} class="ms-3 mt-2 mb-3">
             <h2>E-mail:</h2>
-            <input type="text" name="email" id="" class="ms-3 mt-2 mb-3">
-            <h2>Jelszó:</h2>
-            <input type="text" name="passwd" id="" class="ms-3 mt-2 mb-3">
+            <input type="text" ng-model="ujemail" placeholder={{email}} class="ms-3 mt-2 mb-3">
+            <h2>Új jelszó:</h2>
+            <input type="text" ng-model="ujjelszo" class="ms-3 mt-2 mb-3">
+            <h2>Új jelszó mégegyszer:</h2>
+            <input type="text" ng-model="ujjelszo2" class="ms-3 mt-2 mb-3">
             <br>
-            <button class="btn m-3">Mentés</button>
+            <button class="btn m-3" ng-click="profilmod()">Mentés</button>
         </div>
     </div>
 </section>
