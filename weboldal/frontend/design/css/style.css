@@ -154,11 +154,15 @@ textarea {
 /*
 Számítógép nézet
 */
-.navbar {
+.navbar{
+  padding: 0px;
+}
+
+.navbars {
   padding: 0;
 }
 
-.navbar ul {
+.navbars ul {
   margin: 0;
   padding: 0;
   display: flex;
@@ -166,11 +170,11 @@ Számítógép nézet
   align-items: center;
 }
 
-.navbar li {
+.navbars li {
   position: relative;
 }
 
-.navbar a, .navbar a:focus {
+.navbars a, .navbars a:focus {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -181,17 +185,17 @@ Számítógép nézet
   font-size: 14px;
 }
 
-.navbar a i, .navbar a:focus i {
+.navbars a i, .navbars a:focus i {
   font-size: 12px;
   line-height: 0;
   margin-left: 5px;
 }
 
-.navbar a:hover, .navbar li:hover > a {
+.navbars a:hover, .navbars li:hover > a {
   color: var(--hover);
 }
 
-.navbar .dropdown ul {
+.navbars .dropdown ul {
   display: block;
   position: absolute;
   left: 14px;
@@ -207,43 +211,73 @@ Számítógép nézet
   border-radius: 4px;
 }
 
-.navbar .dropdown ul li {
+.navbars .dropdown ul li {
   min-width: 200px;
 }
 
-.navbar .dropdown ul a {
+.navbars .dropdown ul a {
   padding: 10px 20px;
   color: #444444;
 }
 
-.navbar .dropdown ul a i {
+.navbars .dropdown ul a i {
   font-size: 12px;
 }
 
-.navbar .dropdown:hover > ul {
+.navbars .dropdown:hover > ul {
   opacity: 1;
   top: 100%;
   visibility: visible;
 }
 
-.navbar .dropdown .dropdown ul {
+.navbars .dropdown .dropdown ul {
   top: 0;
   left: calc(100% - 30px);
   visibility: hidden;
 }
 
-.navbar .dropdown .dropdown:hover > ul {
+.navbars .dropdown .dropdown:hover > ul {
   opacity: 1;
   top: 0;
   left: 100%;
   visibility: visible;
 }
 
+.dropdowns{
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: var(--alapszin);
+  min-width: 160px;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: var(--bejhover);
+}
+
+.dropdowns:hover .dropdown-content {
+  display: block;
+  right: 1px;
+  padding: 10px 5px;
+}
+
+
 @media (max-width: 1366px) {
-  .navbar .dropdown .dropdown ul {
+  .navbars .dropdown .dropdown ul {
     left: -90%;
   }
-  .navbar .dropdown .dropdown:hover > ul {
+  .navbars .dropdown .dropdown:hover > ul {
     left: -100%;
   }
 }
@@ -265,7 +299,7 @@ Telefon nézet
     display: block;
   }
 
-  .navbar ul {
+  .navbars ul {
     display: none;
   }
 }
