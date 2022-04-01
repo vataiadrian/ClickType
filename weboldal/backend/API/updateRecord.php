@@ -17,8 +17,8 @@
        $str .= $field.'='.$value.',';
     }
     $str = rtrim($str, ',');
-    echo "UPDATE $table SET $str WHERE ID=$id";
-    if ($conn->exec("UPDATE $table SET $str WHERE ID=$id"))
+    echo "UPDATE $table SET $str WHERE Id=$id";
+    if ($conn->exec("UPDATE $table SET $str WHERE Id=$id"))
     {
         $result = array(
             'error' => '',

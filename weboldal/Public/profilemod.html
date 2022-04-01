@@ -10,19 +10,32 @@
     </div>
 </section>
 
-<section class="tartalom" ng-controller="profilemodCtrl">
+<section class="tartalom">
     <div class="container" data-aos="fade-up">
-        <div class="profmod">
+        <div class="profmod" ng-controller="profilemodCtrl">
             <h2>Játékosnév:</h2>
-            <input type="text" ng-model="ujnev" placeholder={{userName}} class="ms-3 mt-2 mb-3">
+            <input type="text" ng-model="ujnev.Nev" class="ms-3 mt-2 mb-3">
             <h2>E-mail:</h2>
-            <input type="text" ng-model="ujemail" placeholder={{email}} class="ms-3 mt-2 mb-3">
+            <input type="text" ng-model="ujemail.Email" class="ms-3 mt-2 mb-3">
+            <h2 ng-if="jogosultsag==2">Jogosultság</h2>
+            <select ng-if="jogosultsag==2" ng-model="select">
+                <option value="1">1</option>
+                <option value="2">2</option>
+            </select>
+            <br>
+            <button class="btn m-3" ng-click="profilmod()">Mentés</button>
+        </div>
+        <div class="profmod" ng-controller="passmodCtrl">
+            <h1>Jelszó módosítás:</h1>
+            <br>
+            <h2>Jelenlegi jelszó:</h2>
+            <input type="text" ng-model="regijelszo" class="ms-3 mt-2 mb-3">
             <h2>Új jelszó:</h2>
             <input type="text" ng-model="ujjelszo" class="ms-3 mt-2 mb-3">
             <h2>Új jelszó mégegyszer:</h2>
             <input type="text" ng-model="ujjelszo2" class="ms-3 mt-2 mb-3">
             <br>
-            <button class="btn m-3" ng-click="profilmod()">Mentés</button>
+            <button class="btn m-3" ng-click="passmod()">Mentés</button>
         </div>
     </div>
 </section>
