@@ -2,21 +2,21 @@
 
     include_once("DBManager.php");
 
-    if(isset($_POST["Nev"]) && !empty($_POST["Nev"]) && isset($_POST["jelszo"]) && !empty($_POST["jelszo"]))
+    if(isset($_POST["username"]) && !empty($_POST["username"]) && isset($_POST["password"]) && !empty($_POST["password"]))
     {
-        Login($_POST["Nev"], $_POST["jelszo"]);
+        Login($_POST["username"], $_POST["password"]);
     }
 
     function Login($username, $password){
         GLOBAL $con;
 
-        $sql = "SELECT id,Nev FROM users WHERE Nev=? AND jelszo=?";
+        $sql = "SELECT Id,Nev FROM users WHERE Nev=? AND jelszo=?";
         $st = $con -> prepare($sql);
 
         $st -> execute(array($username, sha1($password)));
         $all = $st -> fetchAll();
         if(count($all) == 1){
-            echo "SERVER: ID#".$all[0]["id"]." - ".$all[0]["Nev"];
+            echo "SERVER: ID#".$all[0]["Id"]." - ".$all[0]["Nev"];
             exit();
         }
 
