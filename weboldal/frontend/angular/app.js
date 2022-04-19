@@ -4,6 +4,7 @@ app.run(function($rootScope, $http, $location){
     $rootScope.title = "ClickType";
     if ($rootScope.loggedIn = angular.fromJson(sessionStorage.getItem('uLoggedIn'))) {
         $rootScope.loggedIn=true;
+        $rootScope.email = angular.fromJson(sessionStorage.getItem('uMail'));
         $rootScope.userName= angular.fromJson(sessionStorage.getItem('uName'));
         $rootScope.jogosultsag=angular.fromJson(sessionStorage.getItem('uJog'));
         $location.path('#!/');
@@ -256,6 +257,23 @@ app.controller('felhadminCtrl', function($scope,$http, $location){
     .then(function(res){
         $scope.user = res.data;
     })
+
+    $scope.felhmod = function(Id) {
+        $scope.felh = true;
+        let i = $scope.user.findIndex(item => item.Id === Id);
+        $http({
+            method: "POST",
+            url: "../backend/API/getOneRecord.php",
+            data: {
+                'table': 'users',
+                'felt': 'Id="' + $scope.user[i] + '"'
+            }
+        })
+        .then(function(res){
+            $scope.felhnev = {Nev: res.data[0].Nev};
+            $scope.felhemail = {Email: res.data[0].Email}
+        })
+    }
 
 
     $scope.deleteFelh = function(Id, $window) {
