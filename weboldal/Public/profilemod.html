@@ -17,15 +17,15 @@
             <input type="text" ng-model="ujnev.Nev" class="ms-3 mt-2 mb-3">
             <h2>E-mail:</h2>
             <input type="text" ng-model="ujemail.Email" class="ms-3 mt-2 mb-3">
-            <h2 ng-if="jogosultsag==2">Jogosultság</h2>
-            <select ng-if="jogosultsag==2" ng-model="select">
-                <option value="1">1</option>
-                <option value="2">2</option>
-            </select>
+            <div ng-if="jogosultsag==2">
+                <h2>Jogosultság</h2>
+                <button ng-click="jog1()">Jogosultság 1</button>
+                <button ng-click="jog2()">Jogosultság 2</button>
+            </div>
             <br>
             <button class="btn m-3" ng-click="profilmod()">Mentés</button>
         </div>
-        <div class="profmod" ng-controller="passmodCtrl">
+        <div class="col-lg-7 profmod" ng-controller="passmodCtrl">
             <h1>Jelszó módosítás:</h1>
             <br>
             <h2>Jelenlegi jelszó:</h2>

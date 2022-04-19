@@ -2,15 +2,17 @@ var app= angular.module('ClickApp',["ngRoute"]);
 
 app.run(function($rootScope, $http, $location){
     $rootScope.title = "ClickType";
-    if (sessionStorage.getItem('uLoggedIn')) {
+    if ($rootScope.loggedIn = angular.fromJson(sessionStorage.getItem('uLoggedIn'))) {
         $rootScope.loggedIn=true;
-        $location.path('#!/')
+        $rootScope.userName= angular.fromJson(sessionStorage.getItem('uName'));
+        $rootScope.jogosultsag=angular.fromJson(sessionStorage.getItem('uJog'));
+        $location.path('#!/');
     }
     else{
         $rootScope.loggedIn=false;
         $rootScope.userName="";
         $rootScope.email="";
-        $rootScope.jog="";
+        $rootScope.jogosultsag="";
     }
 });
 
@@ -33,7 +35,7 @@ app.controller('reglogCtrl', function($scope, $rootScope, $http, $location){
                             url: "../backend/API/getOneRecord.php",
                             data: {
                                 'table': 'users',
-                                'felt': 'email="' + $scope.user.emailreg + '"'
+                                'felt': 'Email="' + $scope.user.emailreg + '"'
                             }
                         })
                         .then(function(response) {
@@ -43,27 +45,44 @@ app.controller('reglogCtrl', function($scope, $rootScope, $http, $location){
                                 alert("Ez az e-mail cím már regisztrált!");
                             } else {
                                 $http({
-                                        method: "POST",
-                                        url: "../backend/API/insertRecord.php",
-                                        data: {
-                                            "table": "users",
-                                            "values": {
-                                                "Email": "'" + $scope.user.emailreg + "'",
-                                                "Nev": "'" + $scope.user.name + "'",
-                                                "ido": "'0'",
-                                                "jelszo": "'" + CryptoJS.SHA1($scope.passwd1) + "'",
-                                                "jogosultsag": "'1'"
+                                    method: "POST",
+                                    url: "../backend/API/getOneRecord.php",
+                                    data: {
+                                        'table': 'users',
+                                        'felt': 'Nev="' + $scope.user.name + '"'
+                                    }
+                                })
+                                .then(function(response){
+                                    $scope.users = response.data;
+
+                                    if($scope.users.length != 0){
+                                        alert("Ez a felhasználónév már foglalt!");
+                                    }
+                                    else{
+                                        $http({
+                                            method: "POST",
+                                            url: "../backend/API/insertRecord.php",
+                                            data: {
+                                                "table": "users",
+                                                "values": {
+                                                    "Email": "'" + $scope.user.emailreg + "'",
+                                                    "Nev": "'" + $scope.user.name + "'",
+                                                    "ido": "'0'",
+                                                    "jelszo": "'" + CryptoJS.SHA1($scope.passwd1) + "'",
+                                                    "jogosultsag": "'1'"
+                                                }
                                             }
-                                        }
-                                    })
-                                    .then(function(response) {
-                                        alert(response.data.message);
-                                        $scope.name = "";
-                                        $scope.email = "";
-                                        $scope.pass1 = "";
-                                        $scope.pass2 = "";
-                                        $location.path('#!/');
-                                    });
+                                        })
+                                        .then(function(response) {
+                                            alert(response.data.message);
+                                            $scope.name = "";
+                                            $scope.email = "";
+                                            $scope.pass1 = "";
+                                            $scope.pass2 = "";
+                                            $location.path('#!/');
+                                        });
+                                    }
+                                })
                             }
                         });
                 }
@@ -71,7 +90,7 @@ app.controller('reglogCtrl', function($scope, $rootScope, $http, $location){
         }
     }
 
-    $rootScope.loggedIn= false;
+    //$rootScope.loggedIn= false;
         $scope.user = {emaillog: "", passwd: ""};
              $scope.login=function(){
                 //console.log($scope);
@@ -202,8 +221,8 @@ $routeProvider
         controller: 'felhadminCtrl'
     })
     .when('/profilemod', {
-
         templateUrl: 'profilemod.html',
+        controller: 'profilemodCtrl'
     })
 });
 
@@ -222,8 +241,9 @@ app.controller('statCtrl', function($scope, $http){
         $scope.user = res.data;
     })
 });
-app.controller('felhadminCtrl', function($scope,$http){
+app.controller('felhadminCtrl', function($scope,$http, $location){
     $scope.user = [];
+    $scope.felhasznalok = [];
     $http({
         method: "POST",
         url: "../backend/API/getAllRecords.php",
@@ -236,38 +256,57 @@ app.controller('felhadminCtrl', function($scope,$http){
     .then(function(res){
         $scope.user = res.data;
     })
-
-    $scope.felhasznalok = [];
-    $scope.deleteFelh = function(Id) {
+    $scope.felhmod = function(Id){  
+        let i = $scope.user.findIndex(item => item.Id === Id);
         $http({
             method: "POST",
-            url: "../backend/API/deleteRecord.php",
+            url: "../backend/API/getOneRecord.php",
             data: {
                 "table": "users",
-                "id": Id,
+                "felt": 'Id="' + $scope.user[i].Id + '"'
             }
         })
-        .then(function(response) {
-            let index = $scope.felhasznalok.findIndex(item => item.Id === Id);
-            $scope.felhasznalok.splice(index, 1);
-            alert(response.data.message);
+        .then(function(res){
+            $scope.ujemail = res.data[0].Email;
+            $scope.ujnev = res.data[0].Nev;
+        })
+    }
+
+
+    $scope.deleteFelh = function(Id, $window) {
+        let i = $scope.user.findIndex(item => item.Id === Id);
+        if(window.confirm('Biztos törli ' + $scope.user[i].Nev + ' nevű felhasználót?')){
             $http({
                 method: "POST",
-                url: "../backend/API/getAllRecords.php",
+                url: "../backend/API/deleteRecord.php",
                 data: {
-                    'whatineed': '',
-                    'table': 'users',
-                    'condition': ''                
+                    "table": "users",
+                    "id": Id,
                 }
             })
-            .then(function(res){
-                $scope.user = res.data;
-            })
-        });
+            .then(function(response) {
+                let index = $scope.felhasznalok.findIndex(item => item.Id === Id);
+                $scope.felhasznalok.splice(index, 1);
+                alert(response.data.message);
+                $http({
+                    method: "POST",
+                    url: "../backend/API/getAllRecords.php",
+                    data: {
+                        'whatineed': '',
+                        'table': 'users',
+                        'condition': ''                
+                    }
+                })
+                .then(function(res){
+                    $scope.user = res.data;
+                })
+            });
+        }
     }
 });
 
 app.controller('profilemodCtrl', function($scope, $http, $rootScope, $location){
+    $scope.options=[1,2];
     $scope.ujemail = {Email: $rootScope.email};
     $scope.ujnev = {Nev: $rootScope.userName};
 
@@ -285,6 +324,46 @@ app.controller('profilemodCtrl', function($scope, $http, $rootScope, $location){
         $scope.Id = response.data[0].Id;
         $scope.jogosultsag = response.data[0].jogosultsag;
     });
+    $scope.jog1 = function(){
+        $http({
+            method: "POST",
+            url: "../backend/API/updateRecord.php",
+            data: {
+                'table': 'users',
+                'id': $scope.Id,
+                'values': {
+                    'jogosultsag': "'" + $scope.options[0] + "'"
+                }
+            }
+        })
+        .then(function(response){
+            alert("Jogosultság felülírva!");
+            sessionStorage.setItem('uJog', $scope.jogosultsag);
+            $rootScope.jogosultsag = $scope.jogosultsag;
+            location.reload();
+        })
+        
+    }
+
+    $scope.jog2 = function(){
+        $http({
+            method: "POST",
+            url: "../backend/API/updateRecord.php",
+            data: {
+                'table': 'users',
+                'id': $scope.Id,
+                'values': {
+                    'jogosultsag': "'" + $scope.options[1] + "'"
+                }
+            }
+        })
+        .then(function(response){
+            alert("Jogosultság felülírva!");
+            sessionStorage.setItem('uJog', $scope.jogosultsag);
+            $rootScope.jogosultsag = $scope.jogosultsag;
+            location.reload();
+        })
+    }
 
     $scope.profilmod = function() {
         if ($scope.ujnev == "" || $scope.ujemail == "") {
@@ -302,7 +381,6 @@ app.controller('profilemodCtrl', function($scope, $http, $rootScope, $location){
                     if (response.data != "") {
                         alert("Ez az e-mail cím már foglalt!");
                     } else {
-                        console.log($scope.ujemail)
                         $http({
                                 method: "POST",
                                 url: "../backend/API/updateRecord.php",
@@ -325,6 +403,7 @@ app.controller('profilemodCtrl', function($scope, $http, $rootScope, $location){
                     }
                 });
         }
+
     }
 });
 
