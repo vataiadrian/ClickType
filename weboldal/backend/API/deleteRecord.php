@@ -11,7 +11,7 @@
     $id = $data->id;
     $table = $data->table;
 
-    if ($conn->exec("DELETE FROM $table WHERE ID=$id"))
+    if ($conn->exec("DELETE FROM $table WHERE Id=$id"))
     {
         $result = array(
             'error' => '',

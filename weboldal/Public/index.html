@@ -69,13 +69,11 @@
         <a href="#!/reglog" class="login-btn scrollto d-none d-lg-flex" ng-if="loggedIn == false">Bejelentkezés</a>
         
         <div class="navbar">
-          
           <div class="dropdowns">
             <a class="login-btn scrollto d-none d-lg-flex dropbtn" ng-if="loggedIn==true">{{userName}}</a>
-            
             <div class="dropdown-content">
               <a href="#!/felhadmin" class="scrollto mb-2" ng-if="loggedIn==true && jogosultsag==2">Felhasználók</a>
-              <a href="#!/profilemod" class= "scrollto mb-2" ng-if="loggedIn == true">Profil módosítás</a>
+              <a href="#!/profilemod" class= "scrollto mb-2" ng-if="loggedIn == true" ng-click="profmodlbl()">Profil módosítás</a>
               <a href="" class="scrollto" ng-click="logout()" ng-if="loggedIn == true">Kijelentkezés</a>
             </div>
           </div> 

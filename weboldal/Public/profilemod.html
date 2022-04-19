@@ -24,10 +24,15 @@
                 <option value="1">1</option>
                 <option value="2">2</option>
             </select>
+            <div ng-if="jogosultsag==2">
+                <h2>Jogosultság</h2>
+                <button ng-click="jog1()">Jogosultság 1</button>
+                <button ng-click="jog2()">Jogosultság 2</button>
+            </div>
             <br>
             <button class="btn m-3" ng-click="profilmod()">Mentés</button>
         </div>
-        <div class="profmod" ng-controller="passmodCtrl">
+        <div class="col-lg-7 profmod" ng-controller="passmodCtrl">
             <h1>Jelszó módosítás:</h1>
             <br>
             <h2>Jelenlegi jelszó:</h2>
