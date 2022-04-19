@@ -55,6 +55,9 @@
           <li class="nav-item">
             <a class="nav-link scrollto" href="#!/forum" ng-if="loggedIn == true">Fórum</a>
           </li>
+          <li class="nav-item">
+            <a href="#!/reglog" class=" nav-link scrollto" ng-if="loggedIn == false">Bejelentkezés</a>
+          </li>
 
         </ul>
 
@@ -63,12 +66,12 @@
       </nav>
 
       <div ng-controller="reglogCtrl">
-        <a href="#!/reglog" class="book-a-table-btn scrollto d-none d-lg-flex" ng-if="loggedIn == false">Bejelentkezés</a>
+        <a href="#!/reglog" class="login-btn scrollto d-none d-lg-flex" ng-if="loggedIn == false">Bejelentkezés</a>
         
         <div class="navbar">
           
           <div class="dropdowns">
-            <a class="book-a-table-btn scrollto d-none d-lg-flex dropbtn" ng-if="loggedIn==true" onclick="myFunction()">{{userName}}</a>
+            <a class="login-btn scrollto d-none d-lg-flex dropbtn" ng-if="loggedIn==true">{{userName}}</a>
             
             <div class="dropdown-content">
               <a href="#!/felhadmin" class="scrollto mb-2" ng-if="loggedIn==true && jogosultsag==2">Felhasználók</a>

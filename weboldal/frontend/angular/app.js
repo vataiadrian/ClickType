@@ -238,6 +238,11 @@ app.controller('felhadminCtrl', function($scope,$http){
     })
 
     $scope.felhasznalok = [];
+
+    $scope.felhmod = function(Id) {
+        
+    }
+
     $scope.deleteFelh = function(Id) {
         $http({
             method: "POST",
