@@ -378,6 +378,16 @@ Telefon nézet
   display: block;
 }
 
+.lathato{
+  display: none;
+}
+
+@media (max-width: 991px) {
+  .lathato{
+    display: block;
+  }
+}
+
 
 
 /*--------------------------------------------------------------
