@@ -7,6 +7,7 @@ app.run(function($rootScope, $http, $location){
         $rootScope.email = angular.fromJson(sessionStorage.getItem('uMail'));
         $rootScope.userName= angular.fromJson(sessionStorage.getItem('uName'));
         $rootScope.jogosultsag=angular.fromJson(sessionStorage.getItem('uJog'));
+        $rootScope.ido = angular.fromJson(sessionStorage.getItem('uIdo'));
         $location.path('#!/');
     }
     else{
@@ -14,6 +15,7 @@ app.run(function($rootScope, $http, $location){
         $rootScope.userName="";
         $rootScope.email="";
         $rootScope.jogosultsag="";
+        $rootScope.ido = null;
     }
 });
 
@@ -118,7 +120,8 @@ app.controller('reglogCtrl', function($scope, $rootScope, $http, $location){
                             $rootScope.jogosultsag = $scope.users[0].jogosultsag;
                             $rootScope.userName = $scope.users[0].Nev;
                             $rootScope.email = $scope.users[0].Email;
-                            sessionStorage.setItem('uID',angular.toJson($scope.users[0].ID));
+                            $rootScope.ido = $scope.users[0].ido;
+                            sessionStorage.setItem('uIdo',angular.toJson($scope.users[0].ido));
                             sessionStorage.setItem('uName',angular.toJson($scope.users[0].Nev));
                             sessionStorage.setItem('uMail',angular.toJson($scope.users[0].Email));
                             sessionStorage.setItem('uLoggedIn',angular.toJson($rootScope.loggedIn));
@@ -135,6 +138,8 @@ app.controller('reglogCtrl', function($scope, $rootScope, $http, $location){
                 sessionStorage.removeItem('uJog');
                 sessionStorage.removeItem('uLoggedIn');
                 sessionStorage.removeItem('uMail');
+                sessionStorage.removeItem('uId');
+                $rootScope.ido = null;
                 $rootScope.userName = "";
                 $rootScope.email = "";
                 $rootScope.loggedUser = "";
@@ -227,7 +232,7 @@ $routeProvider
     })
 });
 
-app.controller('statCtrl', function($scope, $http){
+app.controller('statCtrl', function($scope, $http, $rootScope){
     $scope.user = [];
     $http({
         method: "POST",
@@ -235,11 +240,14 @@ app.controller('statCtrl', function($scope, $http){
         data: {
             'whatineed': '',
             'table': 'users',
-            'condition': ''
+            'condition': '1 ORDER BY ido'
         }
     })
     .then(function (res) {
         $scope.user = res.data;
+        let place = $scope.user.findIndex(item => item.ido === $rootScope.ido);
+        alert("A bejelentkezett felhasználó helyezése: " + (place+1));
+        $scope.place = place;
     })
 });
 app.controller('felhadminCtrl', function($scope,$http, $location){
