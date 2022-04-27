@@ -13,7 +13,7 @@
 <section class="tartalom" ng-controller="felhadminCtrl">
 <div class="container">
 
-    <input class="kereses" type="search" placeholder="Keresés" data-aos="fade-up" data-aos-delay="100">
+    <input class="kereses" type="search" placeholder="Keresés" data-aos="fade-up" data-aos-delay="100" ng-model="search">
 
     <div data-aos="fade-up" data-aos-delay="300">
     <table class="table tablazat">
@@ -27,10 +27,10 @@
         </thead>
 
         <tbody>
-        <tr ng-repeat="users in user">
+        <tr ng-repeat="users in user | filter:search">
             <td>{{users.Nev}}</td>
             <td>{{users.Email}}</td>
-            <td><a href="#!/profilemod" ng-click="felhmod()">Mod</a></td>
+            <td><a href="#!/felhmod" ng-click="felhmod(users.Id)">Mod</a></td>
             <td><a href="" ng-click="deleteFelh(users.Id)">Delete</a></td>
         </tr>
         </tbody>

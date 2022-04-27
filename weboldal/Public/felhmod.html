@@ -13,11 +13,14 @@
 <section class="tartalom">
     <div class="container" data-aos="fade-up">
         <div class="row content">
-            <div class="col-lg-5 profmod" ng-controller="profilemodCtrl">
+            <div class="col-lg-5 profmod" ng-controller="felhadminCtrl">
                 <h3>Játékosnév:</h3>
-                <input type="text" ng-model="ujnev.Nev" class="ms-3 mt-2 mb-3">
+                <input type="text" ng-model="felhnev.Nev" class="ms-3 mt-2 mb-3">
                 <h3>E-mail:</h3>
-                <input type="text" ng-model="ujemail.Email" class="ms-3 mt-2 mb-3">
+                <input type="text" ng-model="felhemail.Email" class="ms-3 mt-2 mb-3">
+                <h3 class="pb-3">Jogosultság</h3>
+                <button class="btn" ng-click="jog1()">Jogosultság 1</button>
+                <button class="btn" ng-click="jog2()">Jogosultság 2</button>
                 <br>
                 <button class="btn m-3" ng-click="profilmod()">Mentés</button>
             </div>

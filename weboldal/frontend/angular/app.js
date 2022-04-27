@@ -230,10 +230,23 @@ $routeProvider
         templateUrl: 'profilemod.html',
         controller: 'profilemodCtrl'
     })
+    .when('/felhmod',{
+        resolve: {
+            function($location, $rootScope) {
+                if($rootScope.jogosultsag == 1) {
+                    $location.path('/');
+                }
+            }
+        },
+        templateUrl: 'felhmod.html',
+        controller: 'felhadminCtrl'
+    })
 });
 
 app.controller('statCtrl', function($scope, $http, $rootScope){
     $scope.user = [];
+    $scope.userName = $rootScope.userName;
+    $scope.ido = $rootScope.ido;
     $http({
         method: "POST",
         url: "../backend/API/getAllRecords.php",
@@ -245,13 +258,12 @@ app.controller('statCtrl', function($scope, $http, $rootScope){
     })
     .then(function (res) {
         $scope.user = res.data;
-        let place = $scope.user.findIndex(item => item.ido === $rootScope.ido);
-        alert("A bejelentkezett felhasználó helyezése: " + (place+1));
-        $scope.place = place;
+        $scope.place = $scope.user.findIndex(item => item.ido === $rootScope.ido);
     })
 });
 app.controller('felhadminCtrl', function($scope,$http, $location){
     $scope.user = [];
+    $scope.options=[1,2];
     $scope.felhasznalok = [];
     $http({
         method: "POST",
@@ -265,9 +277,48 @@ app.controller('felhadminCtrl', function($scope,$http, $location){
     .then(function(res){
         $scope.user = res.data;
     })
+    $scope.jog1 = function(){
+        $http({
+            method: "POST",
+            url: "../backend/API/updateRecord.php",
+            data: {
+                'table': 'users',
+                'id': $scope.Id,
+                'values': {
+                    'jogosultsag': "'" + $scope.options[0] + "'"
+                }
+            }
+        })
+        .then(function(response){
+            alert("Jogosultság felülírva!");
+            sessionStorage.setItem('uJog', $scope.jogosultsag);
+            $rootScope.jogosultsag = $scope.jogosultsag;
+            location.reload();
+        })
+        
+    }
+
+    $scope.jog2 = function(){
+        $http({
+            method: "POST",
+            url: "../backend/API/updateRecord.php",
+            data: {
+                'table': 'users',
+                'id': $scope.Id,
+                'values': {
+                    'jogosultsag': "'" + $scope.options[1] + "'"
+                }
+            }
+        })
+        .then(function(response){
+            alert("Jogosultság felülírva!");
+            sessionStorage.setItem('uJog', $scope.jogosultsag);
+            $rootScope.jogosultsag = $scope.jogosultsag;
+            location.reload();
+        })
+    }
 
     $scope.felhmod = function(Id) {
-        $scope.felh = true;
         let i = $scope.user.findIndex(item => item.Id === Id);
         $http({
             method: "POST",
@@ -317,7 +368,6 @@ app.controller('felhadminCtrl', function($scope,$http, $location){
 });
 
 app.controller('profilemodCtrl', function($scope, $http, $rootScope, $location){
-    $scope.options=[1,2];
     $scope.ujemail = {Email: $rootScope.email};
     $scope.ujnev = {Nev: $rootScope.userName};
 
@@ -335,46 +385,6 @@ app.controller('profilemodCtrl', function($scope, $http, $rootScope, $location){
         $scope.Id = response.data[0].Id;
         $scope.jogosultsag = response.data[0].jogosultsag;
     });
-    $scope.jog1 = function(){
-        $http({
-            method: "POST",
-            url: "../backend/API/updateRecord.php",
-            data: {
-                'table': 'users',
-                'id': $scope.Id,
-                'values': {
-                    'jogosultsag': "'" + $scope.options[0] + "'"
-                }
-            }
-        })
-        .then(function(response){
-            alert("Jogosultság felülírva!");
-            sessionStorage.setItem('uJog', $scope.jogosultsag);
-            $rootScope.jogosultsag = $scope.jogosultsag;
-            location.reload();
-        })
-        
-    }
-
-    $scope.jog2 = function(){
-        $http({
-            method: "POST",
-            url: "../backend/API/updateRecord.php",
-            data: {
-                'table': 'users',
-                'id': $scope.Id,
-                'values': {
-                    'jogosultsag': "'" + $scope.options[1] + "'"
-                }
-            }
-        })
-        .then(function(response){
-            alert("Jogosultság felülírva!");
-            sessionStorage.setItem('uJog', $scope.jogosultsag);
-            $rootScope.jogosultsag = $scope.jogosultsag;
-            location.reload();
-        })
-    }
 
     $scope.profilmod = function() {
         if ($scope.ujnev == "" || $scope.ujemail == "") {
