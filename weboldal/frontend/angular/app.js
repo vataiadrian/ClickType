@@ -379,7 +379,7 @@ app.controller('felhadminCtrl', function($scope,$http, $rootScope){
 
     }
 
-    $scope.passmod = function($scope) {
+    $scope.felhpassmod = function($scope) {
         if ($scope.regijelszo == null || $scope.ujjelszo == null || $scope.ujjelszo2 == null) {
             alert("Nem adtad meg az adatokat!");
         } else {
@@ -402,8 +402,8 @@ app.controller('felhadminCtrl', function($scope,$http, $rootScope){
                                 }
                             })
                             .then(function(response) {
-                                if (response.data[0].jelszo != CryptoJS.SHA1($scope.regijelszo)) {
-                                    console.log($scope.felhemail.Email);
+                                if (response.data[0].jelszo != CryptoJS.SHA1($scope.regijelszo).toString()) {
+                                    console.log("esjkf",response.data[0].jelszo,CryptoJS.SHA1($scope.regijelszo).toString());
                                     alert('Nem megfelelő a jelenlegi jelszó!');
                                 } else {
                                     $http({
@@ -525,6 +525,7 @@ app.controller('profilemodCtrl', function($scope, $http, $rootScope, $location){
 app.controller('passmodCtrl', function($scope, $http, $rootScope) {
 
     $scope.passmod = function() {
+        alert("dsfsd");
         if ($scope.regijelszo == null || $scope.ujjelszo == null || $scope.ujjelszo2 == null) {
             alert("Nem adtad meg az adatokat!");
         } else {

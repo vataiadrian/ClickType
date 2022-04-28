@@ -27,7 +27,7 @@
         </thead>
   
         <tbody>
-          <tr ng-repeat="users in user | limitTo: 10 | filter:search">
+          <tr ng-repeat="users in user | filter:search | limitTo: 10">
             <th scope="row">{{users.Id}}</th>
             <td>{{users.Nev}}</td>
             <td>{{users.ido}}</td>
