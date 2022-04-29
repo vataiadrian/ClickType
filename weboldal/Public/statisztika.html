@@ -13,7 +13,7 @@
 <section class="tartalom">
   <div class="container">
 
-    <input class="kereses" type="search" placeholder="Keresés" data-aos="fade-up" data-aos-delay="100">
+    <input class="kereses" type="search" placeholder="Keresés" data-aos="fade-up" data-aos-delay="100" ng-model='search'>
 
     <div data-aos="fade-up" data-aos-delay="300">
       <table class="table tablazat" ng-controller="statCtrl">
@@ -27,15 +27,22 @@
         </thead>
   
         <tbody>
-          <tr ng-repeat="users in user | orderBy:'--ido' | limitTo: 10">
-            <th scope="row">{{$index + 1}}</th>
+          <tr ng-repeat="users in user | filter:search | limitTo: 10">
+            <th scope="row">{{users.Id}}</th>
             <td>{{users.Nev}}</td>
             <td>{{users.ido}}</td>
           </tr>
         </tbody>
+
+        <tfoot>
+          <tr>
+            <th scope="row">{{place + 1}}</th>
+            <td>{{userName}}</td>
+            <td>{{ido}}</td>
+          </tr>
+        </tfoot>
   
       </table>
-
     </div>
 
   </div>

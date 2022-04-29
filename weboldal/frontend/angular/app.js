@@ -7,6 +7,7 @@ app.run(function($rootScope, $http, $location){
         $rootScope.email = angular.fromJson(sessionStorage.getItem('uMail'));
         $rootScope.userName= angular.fromJson(sessionStorage.getItem('uName'));
         $rootScope.jogosultsag=angular.fromJson(sessionStorage.getItem('uJog'));
+        $rootScope.ido = angular.fromJson(sessionStorage.getItem('uIdo'));
         $location.path('#!/');
     }
     else{
@@ -14,6 +15,7 @@ app.run(function($rootScope, $http, $location){
         $rootScope.userName="";
         $rootScope.email="";
         $rootScope.jogosultsag="";
+        $rootScope.ido = null;
     }
 });
 
@@ -118,7 +120,8 @@ app.controller('reglogCtrl', function($scope, $rootScope, $http, $location){
                             $rootScope.jogosultsag = $scope.users[0].jogosultsag;
                             $rootScope.userName = $scope.users[0].Nev;
                             $rootScope.email = $scope.users[0].Email;
-                            sessionStorage.setItem('uID',angular.toJson($scope.users[0].ID));
+                            $rootScope.ido = $scope.users[0].ido;
+                            sessionStorage.setItem('uIdo',angular.toJson($scope.users[0].ido));
                             sessionStorage.setItem('uName',angular.toJson($scope.users[0].Nev));
                             sessionStorage.setItem('uMail',angular.toJson($scope.users[0].Email));
                             sessionStorage.setItem('uLoggedIn',angular.toJson($rootScope.loggedIn));
@@ -135,6 +138,8 @@ app.controller('reglogCtrl', function($scope, $rootScope, $http, $location){
                 sessionStorage.removeItem('uJog');
                 sessionStorage.removeItem('uLoggedIn');
                 sessionStorage.removeItem('uMail');
+                sessionStorage.removeItem('uId');
+                $rootScope.ido = null;
                 $rootScope.userName = "";
                 $rootScope.email = "";
                 $rootScope.loggedUser = "";
@@ -225,26 +230,49 @@ $routeProvider
         templateUrl: 'profilemod.html',
         controller: 'profilemodCtrl'
     })
+    .when('/felhmod',{
+        resolve: {
+            function($location, $rootScope) {
+                if($rootScope.jogosultsag == 1) {
+                    $location.path('/');
+                }
+            }
+        },
+        templateUrl: 'felhmod.html',
+        controller: 'felhadminCtrl'
+    })
 });
 
-app.controller('statCtrl', function($scope, $http){
+app.controller('statCtrl', function($scope, $http, $rootScope){
     $scope.user = [];
+    $scope.userName = $rootScope.userName;
+    $scope.ido = $rootScope.ido;
     $http({
         method: "POST",
         url: "../backend/API/getAllRecords.php",
         data: {
             'whatineed': '',
             'table': 'users',
-            'condition': ''
+            'condition': '1 ORDER BY ido'
         }
     })
     .then(function (res) {
         $scope.user = res.data;
+        console.log(res.data[0]);
+        for (let index = 0; index < $scope.user.length; index++) {
+            $scope.user[index].Id = index + 1;
+            
+        }
+        $scope.place = $scope.user.findIndex(item => item.ido === $rootScope.ido);
     })
 });
-app.controller('felhadminCtrl', function($scope,$http, $location){
+app.controller('felhadminCtrl', function($scope,$http, $rootScope){
     $scope.user = [];
+    $scope.options=[1,2];
     $scope.felhasznalok = [];
+    $scope.felhnev = $rootScope.felhnev;
+    $scope.felhemail = $rootScope.felhemail;
+    $scope.felhId = $rootScope.felhId;
     $http({
         method: "POST",
         url: "../backend/API/getAllRecords.php",
@@ -257,22 +285,147 @@ app.controller('felhadminCtrl', function($scope,$http, $location){
     .then(function(res){
         $scope.user = res.data;
     })
+    $scope.jog1 = function(){
+        $http({
+            method: "POST",
+            url: "../backend/API/updateRecord.php",
+            data: {
+                'table': 'users',
+                'id': $scope.felhId,
+                'values': {
+                    'jogosultsag': "'" + $scope.options[0] + "'"
+                }
+            }
+        })
+        .then(function(response){
+            alert("Jogosultság felülírva!");
+            sessionStorage.setItem('uJog', $scope.jogosultsag);
+            $rootScope.jogosultsag = $scope.jogosultsag;
+            location.reload();
+        })
+        
+    }
+
+    $scope.jog2 = function(){
+        $http({
+            method: "POST",
+            url: "../backend/API/updateRecord.php",
+            data: {
+                'table': 'users',
+                'id': $scope.felhId,
+                'values': {
+                    'jogosultsag': "'" + $scope.options[1] + "'"
+                }
+            }
+        })
+        .then(function(response){
+            alert("Jogosultság felülírva!");
+            sessionStorage.setItem('uJog', $scope.jogosultsag);
+            $rootScope.jogosultsag = $scope.jogosultsag;
+            location.reload();
+        })
+    }
 
     $scope.felhmod = function(Id) {
-        $scope.felh = true;
-        let i = $scope.user.findIndex(item => item.Id === Id);
         $http({
             method: "POST",
             url: "../backend/API/getOneRecord.php",
             data: {
                 'table': 'users',
-                'felt': 'Id="' + $scope.user[i] + '"'
+                'felt': 'Id="' + Id + '"'
             }
         })
         .then(function(res){
-            $scope.felhnev = {Nev: res.data[0].Nev};
-            $scope.felhemail = {Email: res.data[0].Email}
+            $rootScope.felhnev = {Nev: res.data[0].Nev};
+            $rootScope.felhemail = {Email: res.data[0].Email}
+            $rootScope.felhId = res.data[0].Id;
         })
+    }
+
+    $scope.felhdatamod = function() {
+        if ($scope.felhnev == "" || $scope.felhemail == "") {
+            alert("Nem adtál meg minden adatot!");
+        } else {
+            $http({
+                    method: "POST",
+                    url: "../backend/API/getOneRecord.php",
+                    data: {
+                        'table': 'users',
+                        'felt': 'Email="' + $scope.felhemail + '" AND Id<>' + $scope.felhId
+                    }
+                })
+                .then(function(response) {
+                    if (response.data != "") {
+                        alert("Ez az e-mail cím már foglalt!");
+                    } else {
+                        $http({
+                                method: "POST",
+                                url: "../backend/API/updateRecord.php",
+                                data: {
+                                    'table': 'users',
+                                    'id': $scope.felhId,
+                                    'values': {
+                                        'Nev': "'" + $scope.felhnev.Nev + "'",
+                                        'Email': "'" + $scope.felhemail.Email + "'"
+                                    }
+                                }
+                            })
+                            .then(function(response) {
+                                alert("Rekord módosítva!");
+                            });
+                    }
+                });
+        }
+
+    }
+
+    $scope.felhpassmod = function($scope) {
+        if ($scope.regijelszo == null || $scope.ujjelszo == null || $scope.ujjelszo2 == null) {
+            alert("Nem adtad meg az adatokat!");
+        } else {
+            if ($scope.ujjelszo != $scope.ujjelszo2) {
+                alert("A megadott új jleszavak nem egyeznek!");
+            } else {
+                if ($scope.regijelszo == $scope.ujjelszo) {
+                    alert("Az új jelszó megegyezik a régivel!");
+                } else {
+                    let pattern = /^[a-zA-Z0-9]{8,}$/;
+                    if (!$scope.ujjelszo.match(pattern)) {
+                        alert("A jelszó nem felel meg a minimális biztonsági kritériumoknak!");
+                    } else {
+                        $http({
+                                method: 'POST',
+                                url: '../backend/API/getOneRecord.php',
+                                data: {
+                                    'table': 'users',
+                                    'felt': 'Email="' + $scope.felhemail + '"'
+                                }
+                            })
+                            .then(function(response) {
+                                if (response.data[0].jelszo != CryptoJS.SHA1($scope.regijelszo).toString()) {
+                                    console.log("esjkf",response.data[0].jelszo,CryptoJS.SHA1($scope.regijelszo).toString());
+                                    alert('Nem megfelelő a jelenlegi jelszó!');
+                                } else {
+                                    $http({
+                                            method: 'POST',
+                                            url: '../backend/API/updateRecord.php',
+                                            data: {
+                                                "id": response.data[0].Id,
+                                                "table": "users",
+                                                "values": {
+                                                    "jelszo": "'" + CryptoJS.SHA1($scope.ujjelszo) + "'"
+                                                }
+                                            }
+                                        })
+                                        .then(function(response) {
+                                            alert("Jelszó módosítva!");
+                                        });
+                                }
+                            });
+                    }
+                }
+            }
+        }
     }
 
 
@@ -309,7 +462,6 @@ app.controller('felhadminCtrl', function($scope,$http, $location){
 });
 
 app.controller('profilemodCtrl', function($scope, $http, $rootScope, $location){
-    $scope.options=[1,2];
     $scope.ujemail = {Email: $rootScope.email};
     $scope.ujnev = {Nev: $rootScope.userName};
 
@@ -327,46 +479,6 @@ app.controller('profilemodCtrl', function($scope, $http, $rootScope, $location){
         $scope.Id = response.data[0].Id;
         $scope.jogosultsag = response.data[0].jogosultsag;
     });
-    $scope.jog1 = function(){
-        $http({
-            method: "POST",
-            url: "../backend/API/updateRecord.php",
-            data: {
-                'table': 'users',
-                'id': $scope.Id,
-                'values': {
-                    'jogosultsag': "'" + $scope.options[0] + "'"
-                }
-            }
-        })
-        .then(function(response){
-            alert("Jogosultság felülírva!");
-            sessionStorage.setItem('uJog', $scope.jogosultsag);
-            $rootScope.jogosultsag = $scope.jogosultsag;
-            location.reload();
-        })
-        
-    }
-
-    $scope.jog2 = function(){
-        $http({
-            method: "POST",
-            url: "../backend/API/updateRecord.php",
-            data: {
-                'table': 'users',
-                'id': $scope.Id,
-                'values': {
-                    'jogosultsag': "'" + $scope.options[1] + "'"
-                }
-            }
-        })
-        .then(function(response){
-            alert("Jogosultság felülírva!");
-            sessionStorage.setItem('uJog', $scope.jogosultsag);
-            $rootScope.jogosultsag = $scope.jogosultsag;
-            location.reload();
-        })
-    }
 
     $scope.profilmod = function() {
         if ($scope.ujnev == "" || $scope.ujemail == "") {
@@ -413,6 +525,7 @@ app.controller('profilemodCtrl', function($scope, $http, $rootScope, $location){
 app.controller('passmodCtrl', function($scope, $http, $rootScope) {
 
     $scope.passmod = function() {
+        alert("dsfsd");
         if ($scope.regijelszo == null || $scope.ujjelszo == null || $scope.ujjelszo2 == null) {
             alert("Nem adtad meg az adatokat!");
         } else {
