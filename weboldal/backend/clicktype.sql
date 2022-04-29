@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2022. Már 23. 13:40
+-- Létrehozás ideje: 2022. Ápr 29. 22:41
 -- Kiszolgáló verziója: 10.4.22-MariaDB
 -- PHP verzió: 8.0.13
 
@@ -79,9 +79,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`Id`, `Email`, `Nev`, `ido`, `jelszo`, `jogosultsag`) VALUES
-(22, 'admin@admin.com', 'admin', 0, 'c57f22380409cf634863c0bc7283df2125ea8e9d', 1),
-(23, 'asfasdf@asdfs.hu', 'ísdfsdg', 0, '2eb0ee36be44f6f3df2bcd782766176e50fc3fc3', 1),
-(24, 'commodo.at.libero@icloud.edu', 'Fatima Patton', 4851, 'sed,', 2),
+(22, 'admin@admin.com', 'admin', 1, 'c57f22380409cf634863c0bc7283df2125ea8e9d', 1),
+(23, 'asfasdf@asdfs.hu', 'ísdfsdg', 1, '2eb0ee36be44f6f3df2bcd782766176e50fc3fc3', 1),
+(24, 'asd@asd.hu', 'asd', 90, '86f7e437faa5a7fce15d1ddcb9eaeaea377667b8', 2),
 (25, 'tincidunt.nunc.ac@aol.ca', 'Murphy Knight', 52629, 'sodales', 2),
 (26, 'sem.consequat@aol.org', 'Tad Bullock', 88109, 'pellentesque', 1),
 (27, 'bibendum@protonmail.ca', 'Maggie Scott', 34265, 'Cras', 2),
